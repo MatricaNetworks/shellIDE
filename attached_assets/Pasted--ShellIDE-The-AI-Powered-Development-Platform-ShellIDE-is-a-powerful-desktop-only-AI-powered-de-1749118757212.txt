@@ -1,0 +1,90 @@
+🧠 ShellIDE: The AI-Powered Development Platform
+ShellIDE is a powerful, desktop-only, AI-powered development environment that enables developers, DevOps teams, and cybersecurity professionals to work faster and smarter and replaces all of them. It integrates an intuitive natural language prompt interface with the power of OS-level control and full-stack development support, all inside a secure sandboxed environment. Once a project is created, it runs directly inside the IDE for a seamless experience.
+Like cursor AI wherein it can user can code and install extensions and like replit doing project structure and coding and all according to prompt. Which user gives
+
+🛠️ Key Capabilities
+✅ Build & Deploy Code with Natural Prompts
+ Supports any programming language: Python, JavaScript, Rust, Go, C , C++ , Swift
+ Auto-generate project structures and components.
+ Real-time code execution directly inside ShellIDE’s secure sandbox.
+✅ System-Level Command Execution
+ Execute OS commands across macOS, Windows, and Debian Linux.
+ Prompt-based OS-level execution (e.g., Bash on Linux, PowerShell on Windows, zsh on macOS).
+✅ Manage Files, Databases, and Environments
+ Perform CRUD on local project files.
+ Switch folders, create/update files via prompts.
+ Database management: PostgreSQL, MySQL, MongoDB,sqlite
+✅ DevOps/SRE Automation
+ Run Docker builds, manage images, and deploy containers.
+ Kubernetes pod/cluster control.
+ CI/CD pipeline execution (Jenkins, GitHub Actions).
+ Web server configuration updates, log monitoring.
+✅ UI/UX Design Support
+ Live frontend builder for frameworks like React.js, Vue.js, Angular, Svelte.
+ Real-time rendering with HTML, CSS, Tailwind.
+ Visual editing + prompt-assisted layout changes.
+✅ Project-Level Control
+ Auto-create project structure and layout.
+ Live coding and real-time prompt-to-code execution.
+ Applications run directly inside ShellIDE just like Replit. No need to exit the IDE to test your work.
+✅ File & Code Editing
+ Prompt-based code editing, refactoring, and live code updates.
+ Terminal-based code execution with command history.
+
+💻 Desktop-Only ShellIDE
+Built using Electron + React for seamless integration:
+File Explorer: Navigate and manage project files easily.
+
+
+Prompt Panel: Enter natural language commands to build, edit, and deploy.
+
+
+Sandbox Runner: Run applications inside the ShellIDE environment, just like Replit.
+
+
+Terminal: Directly execute system commands in a terminal window.
+
+
+Monaco Code Editor: Edit code with syntax highlighting and autocompletion.
+
+
+
+🔒 Security & Permissions
+User consent required for all local system access.
+
+
+Role-based sandboxing to ensure safe code execution.
+
+
+Enterprise audit trail & logging for compliance.
+
+
+
+🚀 How It Works
+Build & Deploy: Create projects and deploy apps via simple prompts.
+
+
+Run Inside the IDE: Applications run directly inside the IDE for immediate feedback (similar to how Replit runs code).
+
+
+Code & Edit: Use natural prompts to generate, refactor, and test code.
+
+
+OS-level Access: Execute OS commands securely within the sandbox.
+
+
+
+🧱 Tech Stack
+Frontend: Electron + React (Monaco Editor for code editing).
+
+
+Backend: Node.js with Grok API integration (primary AI for prompt-to-action execution).
+
+
+Database: PostgreSQL for database management.
+
+
+DevOps: Dockerized environments, Kubernetes, Jenkins.
+
+
+OS Commands: Bash (Linux), PowerShell/CMD (Windows), zsh (macOS).
