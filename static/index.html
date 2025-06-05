@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShellIDE - Starting...</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="startup-screen">
+        <div class="startup-content">
+            <i class="fas fa-code startup-icon"></i>
+            <h1>ShellIDE</h1>
+            <p>AI-Powered Development Platform</p>
+            <div class="startup-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p class="progress-text">Starting application...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-redirect to main application
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 2000);
+        
+        // Update progress
+        let progress = 0;
+        const progressFill = document.querySelector('.progress-fill');
+        const progressText = document.querySelector('.progress-text');
+        
+        const messages = [
+            'Initializing backend...',
+            'Loading AI models...',
+            'Setting up development environment...',
+            'Ready!'
+        ];
+        
+        const interval = setInterval(() => {
+            progress += 25;
+            progressFill.style.width = progress + '%';
+            
+            if (progress <= 100) {
+                progressText.textContent = messages[Math.floor(progress / 25) - 1] || messages[0];
+            }
+            
+            if (progress >= 100) {
+                clearInterval(interval);
+                progressText.textContent = 'Redirecting...';
+            }
+        }, 500);
+    </script>
+</body>
+</html>

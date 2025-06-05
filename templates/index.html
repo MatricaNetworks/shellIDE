@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShellIDE - AI-Powered Development Platform</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/editor/editor.main.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/css/xterm.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Loading Screen -->
+        <div id="loading" class="loading-screen">
+            <div class="loading-content">
+                <i class="fas fa-code"></i>
+                <h2>ShellIDE</h2>
+                <p>AI-Powered Development Platform</p>
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+
+        <!-- Login Required Screen -->
+        <div id="login-required" class="login-screen" style="display: none;">
+            <div class="login-content">
+                <i class="fas fa-code"></i>
+                <h1>ShellIDE</h1>
+                <p>AI-Powered Development Platform</p>
+                <a href="/auth/google" class="google-login-btn">
+                    <i class="fab fa-google"></i>
+                    Sign in with Google
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Application -->
+        <div id="main-app" style="display: none;">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <i class="fas fa-code"></i>
+                    <span class="app-title">ShellIDE</span>
+                </div>
+                <div class="header-center">
+                    <div class="project-selector">
+                        <select id="current-project">
+                            <option value="">No Project Selected</option>
+                        </select>
+                        <button id="new-project-btn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> New Project
+                        </button>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button id="ai-chat-btn" class="btn btn-secondary">
+                        <i class="fas fa-robot"></i> AI Assistant
+                    </button>
+                    <div class="user-menu">
+                        <button id="user-menu-btn" class="user-menu-btn">
+                            <img id="user-avatar" src="" alt="User" class="user-avatar">
+                            <span id="user-name">User</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div id="user-dropdown" class="user-dropdown">
+                            <a href="#" id="api-keys-btn">
+                                <i class="fas fa-key"></i> API Keys
+                            </a>
+                            <a href="#" id="settings-btn">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <hr>
+                            <a href="#" id="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <div class="app-content">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-tabs">
+                        <button class="tab-btn active" data-tab="files">
+                            <i class="fas fa-folder"></i>
+                            <span>Files</span>
+                        </button>
+                        <button class="tab-btn" data-tab="search">
+                            <i class="fas fa-search"></i>
+                            <span>Search</span>
+                        </button>
+                        <button class="tab-btn" data-tab="git">
+                            <i class="fas fa-code-branch"></i>
+                            <span>Git</span>
+                        </button>
+                    </div>
+                    <div class="sidebar-content">
+                        <div id="files-tab" class="tab-content active">
+                            <div class="file-explorer">
+                                <div class="file-tree" id="file-tree">
+                                    <div class="empty-state">
+                                        <i class="fas fa-folder-open"></i>
+                                        <p>No project selected</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="search-tab" class="tab-content">
+                            <div class="search-panel">
+                                <input type="text" placeholder="Search files..." class="search-input">
+                                <div class="search-results"></div>
+                            </div>
+                        </div>
+                        <div id="git-tab" class="tab-content">
+                            <div class="git-panel">
+                                <p>Git integration coming soon...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editor Area -->
+                <div class="editor-area">
+                    <div class="editor-tabs" id="editor-tabs">
+                        <div class="empty-editor">
+                            <i class="fas fa-code"></i>
+                            <h3>Welcome to ShellIDE</h3>
+                            <p>Select a file to start editing or create a new project</p>
+                        </div>
+                    </div>
+                    <div class="editor-container" id="editor-container">
+                        <!-- Monaco editor will be initialized here -->
+                    </div>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="right-panel">
+                    <div class="panel-tabs">
+                        <button class="tab-btn active" data-tab="terminal">
+                            <i class="fas fa-terminal"></i>
+                            <span>Terminal</span>
+                        </button>
+                        <button class="tab-btn" data-tab="ai-chat">
+                            <i class="fas fa-robot"></i>
+                            <span>AI Chat</span>
+                        </button>
+                        <button class="tab-btn" data-tab="output">
+                            <i class="fas fa-play"></i>
+                            <span>Output</span>
+                        </button>
+                    </div>
+                    <div class="panel-content">
+                        <div id="terminal-tab" class="tab-content active">
+                            <div class="terminal-container">
+                                <div class="terminal-header">
+                                    <span class="terminal-title">Terminal</span>
+                                    <button id="clear-terminal" class="btn btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div id="terminal" class="terminal"></div>
+                            </div>
+                        </div>
+                        <div id="ai-chat-tab" class="tab-content">
+                            <div class="ai-chat-container">
+                                <div class="chat-header">
+                                    <span class="chat-title">AI Assistant</span>
+                                    <select id="ai-model-select" class="model-select">
+                                        <option value="">Loading models...</option>
+                                    </select>
+                                </div>
+                                <div id="chat-messages" class="chat-messages">
+                                    <div class="chat-message assistant">
+                                        <div class="message-content">
+                                            <p>Hello! I'm your AI coding assistant. How can I help you today?</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chat-input-container">
+                                    <textarea id="chat-input" placeholder="Ask me anything about your code..."></textarea>
+                                    <button id="send-chat" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="output-tab" class="tab-content">
+                            <div class="output-container">
+                                <div class="output-header">
+                                    <span class="output-title">Output</span>
+                                    <button id="clear-output" class="btn btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div id="output-content" class="output-content">
+                                    <div class="empty-state">
+                                        <i class="fas fa-play"></i>
+                                        <p>No output yet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <!-- New Project Modal -->
+        <div id="new-project-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create New Project</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="new-project-form">
+                        <div class="form-group">
+                            <label for="project-name">Project Name</label>
+                            <input type="text" id="project-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-language">Language</label>
+                            <select id="project-language" required>
+                                <option value="">Select Language</option>
+                                <option value="python">Python</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="react">React</option>
+                                <option value="flutter">Flutter</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-template">Template</label>
+                            <select id="project-template">
+                                <option value="basic">Basic</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-description">Description</label>
+                            <textarea id="project-description" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" form="new-project-form" class="btn btn-primary">Create Project</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Keys Modal -->
+        <div id="api-keys-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>API Keys</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="api-keys-list" id="api-keys-list">
+                        <!-- API keys will be loaded here -->
+                    </div>
+                    <hr>
+                    <form id="add-api-key-form">
+                        <h4>Add New API Key</h4>
+                        <div class="form-group">
+                            <label for="api-key-name">Name</label>
+                            <input type="text" id="api-key-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="api-key-provider">Provider</label>
+                            <select id="api-key-provider" required>
+                                <option value="openrouter">OpenRouter</option>
+                                <option value="openai">OpenAI</option>
+                                <option value="anthropic">Anthropic</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="api-key-value">API Key</label>
+                            <input type="password" id="api-key-value" required>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="api-key-default">
+                                Set as default
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add API Key</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/js/xterm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/js/addons/fit/fit.min.js"></script>
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/editor.js"></script>
+    <script src="/static/js/terminal.js"></script>
+    <script src="/static/js/filemanager.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

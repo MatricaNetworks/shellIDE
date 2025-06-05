@@ -1,0 +1,105 @@
+{
+  "name": "shellide-desktop",
+  "version": "1.0.0",
+  "description": "ShellIDE - AI-Powered Development Platform",
+  "main": "main.js",
+  "homepage": "./",
+  "private": true,
+  "author": {
+    "name": "ShellIDE Team",
+    "email": "team@shellide.dev"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"npm run start-backend\" \"npm run start-frontend\" \"wait-on http://localhost:3000 && electron .\"",
+    "start-backend": "cd .. && python main.py",
+    "start-frontend": "cd .. && npm start",
+    "build": "cd .. && npm run build && electron-builder",
+    "build-win": "cd .. && npm run build && electron-builder --win",
+    "build-mac": "cd .. && npm run build && electron-builder --mac",
+    "build-linux": "cd .. && npm run build && electron-builder --linux",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "dev.shellide.desktop",
+    "productName": "ShellIDE",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "../build/**/*",
+      "../*.py",
+      "../requirements.txt",
+      "!../node_modules",
+      "!../src",
+      "!../public"
+    ],
+    "extraResources": [
+      {
+        "from": "../",
+        "to": "app",
+        "filter": [
+          "*.py",
+          "requirements.txt"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/icon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "darkModeSupport": true
+    },
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "category": "Development",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "dependencies": {
+    "electron-is-dev": "^2.0.0",
+    "electron-updater": "^6.1.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "electron-reload": "^2.0.0-alpha.1",
+    "wait-on": "^7.0.1"
+  }
+}
