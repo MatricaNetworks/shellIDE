@@ -6,7 +6,7 @@ from fastapi import HTTPException
 
 class OpenRouterClient:
     def __init__(self, api_key: str = None):
-        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
+        self.api_key = api_key or os.getenv("Sk-or-v1-3b9b98b81c311516ec8b4df15c911dd97b32d4ab08def26822a985eb8c101e6d")
         self.base_url = "https://openrouter.ai/api/v1"
         self.headers = {
             "Authorization": f"Bearer {self.api_key}",
